@@ -87,8 +87,16 @@ public class CategoryDao {
 
             try {
 
-                if (resultSet != null){
+                if (resultSet != null && !resultSet.isClosed()){
                     resultSet.close();
+                }
+
+                if (preparedStatement != null && !preparedStatement.isClosed()){
+                    preparedStatement.close();
+                }
+
+                if (connection != null && !connection.isClosed()){
+                    connection.close();
                 }
 
             } catch (Exception e){
