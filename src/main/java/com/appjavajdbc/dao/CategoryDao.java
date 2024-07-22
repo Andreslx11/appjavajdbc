@@ -28,14 +28,17 @@ public class CategoryDao {
          hacer a la  inversa primero se cierra ResultSet -> PrepereStatement -> Connection
          al final de todo asi sea que no se pudo hacer la conexión */
 
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;  // para leer la infromación recuperada de la base datos
+//        Connection connection = null;
+//        PreparedStatement preparedStatement = null;
+//        ResultSet resultSet = null;  // para leer la infromación recuperada de la base datos
 
 
         // process
         // try por si la base datos no responde
+        /* esta forma era antes de la version 7 java despues de version se usa try resources
+        y no el bloque finlly */
 
+        /*
         try {
 
 
@@ -110,5 +113,62 @@ public class CategoryDao {
 
         return  categories;
 
+        */
+
+        // sql query
+        sqlQuery = "SELECT id, name, description, url_key, state, created_at, updated_at from categories";
+
+        try (         // ENTRE ()  van los recursos que se van cerrar de ultimo
+                      /* De este modo con este try resource se van liberar recursos
+                       automaticamente */
+
+                      // Get connection
+                      Connection connection = new ConnectionCore().getConnection();
+                      // Prepare  Statement
+                      PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
+                      //Execute  query
+                      ResultSet resultSet = preparedStatement.executeQuery();
+
+        ) {
+
+            // Set data
+
+            while (resultSet.next()) {
+
+                category = new Category();
+
+                category.setId(resultSet.getLong("id"));
+                category.setName(resultSet.getString("name"));
+                category.setDescription(resultSet.getString("description"));
+                category.setUrlKey(resultSet.getString("url_key"));
+                category.setState(resultSet.getString("state"));
+
+                // para manejar las fechas
+                Timestamp createdAt = resultSet.getTimestamp("created_at");
+                if (createdAt != null) {
+                    category.setCreatedAt(createdAt.toLocalDateTime());
+                }
+
+                Timestamp updatedAt = resultSet.getTimestamp("updated_at");
+                if (updatedAt != null) {
+                    category.setCreatedAt(updatedAt.toLocalDateTime());
+                }
+
+
+                // vamos añadir cada objeto creado a la lista
+                categories.add(category);
+            }
+
+        } catch (Exception e) {
+            System.out.println("CategoryDao::findAll::Error" + e.getMessage());
+        }
+
+        //result
+        return categories;
+
     }
+
 }
+
+
+
