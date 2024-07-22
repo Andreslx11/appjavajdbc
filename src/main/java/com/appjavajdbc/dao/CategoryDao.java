@@ -11,7 +11,7 @@ import java.util.List;
 
 public class CategoryDao {
 
-    public List<Category> findAll() {
+    public List<Category> findAll() throws Exception {
 
         // Atributes
 
@@ -159,8 +159,6 @@ public class CategoryDao {
                 categories.add(category);
             }
 
-        } catch (Exception e) {
-            System.out.println("CategoryDao::findAll::Error" + e.getMessage());
         }
 
         //result

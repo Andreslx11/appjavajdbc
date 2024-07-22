@@ -5,12 +5,14 @@ import java.sql.DriverManager;
 
 
 
-public class ConnectionCore {
+public class ConnectionCore  {
 
     /*    Esto es de forma didáctica para aprender   fundamentos, esto se haria directamente en la
      carpeta resource  en el archivo properties  con una sentencia de forma automatica       */
 
-    public Connection getConnection() {
+    // Con el throws indicamos que la clase que use este metodo necesita implementar un try catch
+
+    public Connection getConnection() throws  Exception{
 
         // Atributes
 
@@ -24,7 +26,7 @@ public class ConnectionCore {
 
 
 
-         try {
+
              // load driver
              Class.forName("com.mysql.cj.jdbc.Driver");
 
@@ -34,11 +36,9 @@ public class ConnectionCore {
              // result
              return DriverManager.getConnection(url, userName, password);
 
-         } catch (Exception e){
-             System.out.println("Connection::getConnection::CoreError: " +  e.getMessage());
-         }
 
-         return null;
 
     }
+
+
 }
