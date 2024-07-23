@@ -166,6 +166,63 @@ public class CategoryDao {
 
     }
 
+    public Category findById(Long id) throws Exception {
+
+        // Attributes
+        Category category = null;
+
+        String sqlQuery;
+
+
+        // process
+        // No lo concatenamos con "+" por que no es una buena pratica, mejor se parametriza con "?"
+        sqlQuery = "select  id, name,  description, url_key, state,  created_At, updated_at from categories  where id= ?";
+
+        try (
+                // Abro la conexion y prepararo la sentencia
+
+                // Get connection
+                Connection connection = new ConnectionCore().getConnection();
+                // Prepare  Statement
+                PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
+
+        ) {
+
+            // Set parameter
+            preparedStatement.setLong(1, id);
+
+            try (
+                    //Execute  query
+                    ResultSet resultSet = preparedStatement.executeQuery();
+            ) {
+                // Set data
+
+                if (resultSet.next()) {
+
+                    category = new Category();
+
+                    category.setId(resultSet.getLong("id"));
+                    category.setName(resultSet.getString("name"));
+                    category.setDescription(resultSet.getString("description"));
+                    category.setUrlKey(resultSet.getString("url_key"));
+                    category.setState(resultSet.getString("state"));
+
+                    // para manejar las fechas
+                    Timestamp createdAt = resultSet.getTimestamp("created_at");
+                    if (createdAt != null) {
+                        category.setCreatedAt(createdAt.toLocalDateTime());
+                    }
+
+                    Timestamp updatedAt = resultSet.getTimestamp("updated_at");
+                    if (updatedAt != null) {
+                        category.setCreatedAt(updatedAt.toLocalDateTime());
+                    }
+                }
+            }
+        }
+        return category;
+    }
+
 }
 
 

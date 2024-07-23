@@ -33,7 +33,7 @@ public class AppjavajdbcApplication {
 
 
             CategoryDao categoryDao = new CategoryDao();
-
+/*
             List<Category> categories = categoryDao.findAll();
 
             System.out.println("Categories  start: ");
@@ -48,6 +48,16 @@ public class AppjavajdbcApplication {
             }
 
             System.out.println("Categories  end.");
+  */
+
+            Category category =  categoryDao.findById(1L);
+            System.out.println("Id: " + category.getId());
+            System.out.println("Name: " + category.getName());
+            System.out.println("Description: " + category.getDescription());
+            System.out.println("Url key: " + category.getUrlKey());
+            System.out.println("State: " + category.getState());
+            System.out.println("Created at: " + category.getCreatedAt());
+            System.out.println();
 
         }  catch (Exception e){
             System.out.println("Error: " + e.getMessage());
