@@ -3,11 +3,12 @@ package com.appjavajdbc;
 import com.appjavajdbc.dao.CategoryDao;
 
 
+import com.appjavajdbc.dao.impl.CategoryDaoImpl;
 import com.appjavajdbc.entity.Category;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import java.util.List;
+
 
 
 @SpringBootApplication
@@ -32,7 +33,9 @@ public class AppjavajdbcApplication {
         try {
 
 
-            CategoryDao categoryDao = new CategoryDao();
+            CategoryDao categoryDao = new CategoryDaoImpl();
+
+
 /*
             List<Category> categories = categoryDao.findAll();
 
