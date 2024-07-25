@@ -1,14 +1,12 @@
 package com.appjavajdbc;
 
-import com.appjavajdbc.dao.CategoryDao;
-
-
-import com.appjavajdbc.dao.impl.CategoryDaoImpl;
+import com.appjavajdbc.dao.CategoryDao; 
+import com.appjavajdbc.dao.impl.CategoryStoreImpl;
 import com.appjavajdbc.entity.Category;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-
+import java.util.List;
 
 
 @SpringBootApplication
@@ -32,11 +30,13 @@ public class AppjavajdbcApplication {
 
         try {
 
+                // implmentacion  CategoryDaoImpl
+            // CategoryDao categoryDao = new CategoryDaoImpl();
 
-            CategoryDao categoryDao = new CategoryDaoImpl();
+            // implmentacion  CategoryStoreImpl
+            CategoryDao categoryDao = new CategoryStoreImpl();
 
 
-/*
             List<Category> categories = categoryDao.findAll();
 
             System.out.println("Categories  start: ");
@@ -51,16 +51,18 @@ public class AppjavajdbcApplication {
             }
 
             System.out.println("Categories  end.");
-  */
 
-            Category category =  categoryDao.findById(1L);
-            System.out.println("Id: " + category.getId());
-            System.out.println("Name: " + category.getName());
-            System.out.println("Description: " + category.getDescription());
-            System.out.println("Url key: " + category.getUrlKey());
-            System.out.println("State: " + category.getState());
-            System.out.println("Created at: " + category.getCreatedAt());
-            System.out.println();
+
+
+
+//            Category category =  categoryDao.findById(1L);
+//            System.out.println("Id: " + category.getId());
+//            System.out.println("Name: " + category.getName());
+//            System.out.println("Description: " + category.getDescription());
+//            System.out.println("Url key: " + category.getUrlKey());
+//            System.out.println("State: " + category.getState());
+//            System.out.println("Created at: " + category.getCreatedAt());
+//            System.out.println();
 
         }  catch (Exception e){
             System.out.println("Error: " + e.getMessage());
