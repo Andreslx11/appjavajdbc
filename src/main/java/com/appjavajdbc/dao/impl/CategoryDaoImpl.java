@@ -14,6 +14,10 @@ import java.util.List;
 
 
 public class CategoryDaoImpl implements CategoryDao {
+
+   // Logica para el CRUD
+
+
     @Override
     public List<Category> findAll() throws Exception {
         // Atributes
@@ -130,6 +134,135 @@ public class CategoryDaoImpl implements CategoryDao {
             }
         }
         return category;
+    }
+
+
+    @Override
+    public int create(Category category) throws Exception {
+
+        // Attributes
+
+        int result = 0;
+        String sqlQuery;
+
+
+        // process
+
+        sqlQuery = "insert into categories (name, description, url_key, state, created_at) values(?, ?, ?, ?, ?)";
+
+
+        try (
+                // Connection
+                Connection connection = new ConnectionCore().getConnection();
+
+                // Prepared Stetament
+                PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
+
+        ) {
+
+          /* como la consulta sqlQuery tiene parametros no se le puden asignar dentro
+             de los parentesis del try resources  */
+
+            // Set parameter
+            preparedStatement.setString(1, category.getName());
+            preparedStatement.setString(2, category.getDescription());
+            preparedStatement.setString(3, category.getUrlKey());
+            preparedStatement.setString(4, category.getState());
+            preparedStatement.setTimestamp(5, Timestamp.valueOf(category.getCreatedAt()));
+
+
+            // execute query
+            // executeUpdate() retorna 1 un valor positivo si realizo la operación y un
+            // valor negativo si no pudo realizar la operación
+            result = preparedStatement.executeUpdate();
+
+
+        }
+
+        // Result
+        return result;
+    }
+
+
+    @Override
+    public int update(Long id, Category category) throws Exception {
+
+        // Attributes
+
+        int result = 0;
+        String sqlQuery;
+
+
+        // process
+
+        sqlQuery = "update categories set name = ?, description = ?, url_key = ?, updated_at =? where id = ?";
+
+
+        try (
+                // Connection
+                Connection connection = new ConnectionCore().getConnection();
+
+                // Prepared Stetament
+                PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
+
+        ) {
+
+          /* como la consulta sqlQuery tiene parametros no se le puden asignar dentro
+             de los parentesis del try resources  */
+
+            // Set parameter
+            preparedStatement.setString(1, category.getName());
+            preparedStatement.setString(2, category.getDescription());
+            preparedStatement.setString(3, category.getUrlKey());
+            preparedStatement.setTimestamp(4, Timestamp.valueOf(category.getUpdatedAt()));
+            preparedStatement.setLong(5, id);
+
+
+            // execute query
+            // executeUpdate() retorna 1 un valor positivo si realizo la operación y un
+            // valor negativo si no pudo realizar la operación
+            result = preparedStatement.executeUpdate();
+
+
+        }
+
+        // Result
+        return result;
+    }
+
+    @Override
+    public void deleteById(Long id) throws Exception {
+      // Attributes
+
+        String sqlQuery;
+
+
+        // process
+
+        sqlQuery = "delete from categories where id =?";
+
+
+        try (
+                // Connection
+                Connection connection = new ConnectionCore().getConnection();
+
+                // Prepared Stetament
+                PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
+
+        ) {
+
+
+            // Set parameter
+            preparedStatement.setLong(1, id);
+
+
+            // Execute query
+            preparedStatement.executeUpdate();
+
+
+        }
+
+
     }
 
 }

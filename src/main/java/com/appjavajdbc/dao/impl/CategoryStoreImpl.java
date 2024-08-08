@@ -135,4 +135,19 @@ public class CategoryStoreImpl implements CategoryDao {
         }
         return category;
     }
+
+    @Override
+    public int create(Category category) throws Exception {
+        return 0;
+    }
+
+    @Override
+    public int update(Long id, Category category) throws Exception {
+        return 0;
+    }
+
+    @Override
+    public void deleteById(Long id) throws Exception {
+
+    }
 }
