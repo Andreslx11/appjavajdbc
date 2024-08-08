@@ -13,6 +13,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+// Esta es muy especifica  para categoria lo ideal es que fuera
+// generica para eso se creo en el package core una interface CrudDao generico
+
+
+
 public class CategoryDaoImpl implements CategoryDao {
 
    // Logica para el CRUD

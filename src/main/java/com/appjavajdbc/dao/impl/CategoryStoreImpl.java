@@ -15,7 +15,8 @@ import java.util.List;
 que aquí se usa LinkedList  y sqlQuery = "SELECT * FROM categories" , esto como ejemplo
 que si por alguna necesdida  de hace mnuevas implementaciones es mejor hacerlas sobre otra
 clase igual, e ir trabajando en la otra haciendo pruebas para no romper el programa*/
-
+// Esta es muy especifica  para categoria lo ideal es que fuera
+// generica para eso se creo en el package core una interface CrudDao generico
 
 public class CategoryStoreImpl implements CategoryDao {
     @Override
