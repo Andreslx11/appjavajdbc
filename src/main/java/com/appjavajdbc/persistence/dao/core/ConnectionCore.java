@@ -1,4 +1,4 @@
-package com.appjavajdbc.dao.core;
+package com.appjavajdbc.persistence.dao.core;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

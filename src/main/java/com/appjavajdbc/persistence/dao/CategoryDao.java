@@ -1,7 +1,7 @@
-package com.appjavajdbc.dao;
+package com.appjavajdbc.persistence.dao;
 
-import com.appjavajdbc.dao.core.CrudDao;
-import com.appjavajdbc.entity.Category;
+import com.appjavajdbc.persistence.dao.core.CrudDao;
+import com.appjavajdbc.persistence.entity.Category;
 
 
 

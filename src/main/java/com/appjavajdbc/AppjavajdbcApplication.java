@@ -1,8 +1,8 @@
 package com.appjavajdbc;
 
-import com.appjavajdbc.dao.CategoryDao;
-import com.appjavajdbc.dao.impl.CategoryDaoImpl;
-import com.appjavajdbc.entity.Category;
+import com.appjavajdbc.persistence.dao.CategoryDao;
+import com.appjavajdbc.persistence.dao.impl.CategoryDaoImpl;
+import com.appjavajdbc.persistence.entity.Category;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

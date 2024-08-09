@@ -1,7 +1,7 @@
-package com.appjavajdbc.dao.impl;
+package com.appjavajdbc.persistence.dao.impl;
 
-import com.appjavajdbc.dao.ProductDao;
-import com.appjavajdbc.entity.Product;
+import com.appjavajdbc.persistence.dao.ProductDao;
+import com.appjavajdbc.persistence.entity.Product;
 
 import java.util.List;
 

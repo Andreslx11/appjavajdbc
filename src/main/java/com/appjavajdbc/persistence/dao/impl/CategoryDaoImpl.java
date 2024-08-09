@@ -1,9 +1,9 @@
-package com.appjavajdbc.dao.impl;
+package com.appjavajdbc.persistence.dao.impl;
 
 
-import com.appjavajdbc.dao.CategoryDao;
-import com.appjavajdbc.dao.core.ConnectionCore;
-import com.appjavajdbc.entity.Category;
+import com.appjavajdbc.persistence.dao.CategoryDao;
+import com.appjavajdbc.persistence.dao.core.ConnectionCore;
+import com.appjavajdbc.persistence.entity.Category;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
