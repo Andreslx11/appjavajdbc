@@ -2,7 +2,7 @@ package com.appjavajdbc.dao.impl;
 
 
 import com.appjavajdbc.dao.CategoryDao;
-import com.appjavajdbc.dao.ConnectionCore;
+import com.appjavajdbc.dao.core.ConnectionCore;
 import com.appjavajdbc.entity.Category;
 
 import java.sql.Connection;
@@ -16,9 +16,9 @@ import java.util.List;
 // Esta es muy especifica  para categoria lo ideal es que fuera
 // generica para eso se creo en el package core una interface CrudDao generico
 
+// Como la clase ConnectionCore se cambio a abstrata se debe extends
 
-
-public class CategoryDaoImpl implements CategoryDao {
+public class CategoryDaoImpl  extends ConnectionCore implements CategoryDao {
 
    // Logica para el CRUD
 
@@ -42,7 +42,16 @@ public class CategoryDaoImpl implements CategoryDao {
                        automaticamente */
 
                       // Get connection
-                      Connection connection = new ConnectionCore().getConnection();
+                      /* como ya ConnectionCore es un class abstract no se puede instanciar,
+                        en este caso ya la clase CategoryDaoImpl  extiende ConnectionCore
+                        por lo cual puede usar sus metodos
+
+                       // Connection connection = new ConnectionCore().getConnection();
+
+                        */
+
+                      Connection connection = getConnection();
+
                       // Prepare  Statement
                       PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
                       //Execute  query
@@ -54,24 +63,8 @@ public class CategoryDaoImpl implements CategoryDao {
 
             while (resultSet.next()) {
 
-                category = new Category();
+                category = mapResultSetToCategory(resultSet);
 
-                category.setId(resultSet.getLong("id"));
-                category.setName(resultSet.getString("name"));
-                category.setDescription(resultSet.getString("description"));
-                category.setUrlKey(resultSet.getString("url_key"));
-                category.setState(resultSet.getString("state"));
-
-                // para manejar las fechas
-                Timestamp createdAt = resultSet.getTimestamp("created_at");
-                if (createdAt != null) {
-                    category.setCreatedAt(createdAt.toLocalDateTime());
-                }
-
-                Timestamp updatedAt = resultSet.getTimestamp("updated_at");
-                if (updatedAt != null) {
-                    category.setCreatedAt(updatedAt.toLocalDateTime());
-                }
 
 
                 // vamos añadir cada objeto creado a la lista
@@ -100,7 +93,8 @@ public class CategoryDaoImpl implements CategoryDao {
                 // Abro la conexion y prepararo la sentencia
 
                 // Get connection
-                Connection connection = new ConnectionCore().getConnection();
+                 Connection connection =getConnection();
+
                 // Prepare  Statement
                 PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
 
@@ -117,24 +111,8 @@ public class CategoryDaoImpl implements CategoryDao {
 
                 if (resultSet.next()) {
 
-                    category = new Category();
+                    category = mapResultSetToCategory(resultSet);
 
-                    category.setId(resultSet.getLong("id"));
-                    category.setName(resultSet.getString("name"));
-                    category.setDescription(resultSet.getString("description"));
-                    category.setUrlKey(resultSet.getString("url_key"));
-                    category.setState(resultSet.getString("state"));
-
-                    // para manejar las fechas
-                    Timestamp createdAt = resultSet.getTimestamp("created_at");
-                    if (createdAt != null) {
-                        category.setCreatedAt(createdAt.toLocalDateTime());
-                    }
-
-                    Timestamp updatedAt = resultSet.getTimestamp("updated_at");
-                    if (updatedAt != null) {
-                        category.setCreatedAt(updatedAt.toLocalDateTime());
-                    }
                 }
             }
         }
@@ -158,7 +136,7 @@ public class CategoryDaoImpl implements CategoryDao {
 
         try (
                 // Connection
-                Connection connection = new ConnectionCore().getConnection();
+                Connection connection =getConnection();
 
                 // Prepared Stetament
                 PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
@@ -205,7 +183,7 @@ public class CategoryDaoImpl implements CategoryDao {
 
         try (
                 // Connection
-                Connection connection = new ConnectionCore().getConnection();
+                Connection connection =getConnection();
 
                 // Prepared Stetament
                 PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
@@ -249,7 +227,7 @@ public class CategoryDaoImpl implements CategoryDao {
 
         try (
                 // Connection
-                Connection connection = new ConnectionCore().getConnection();
+                Connection connection = getConnection();
 
                 // Prepared Stetament
                 PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
@@ -269,6 +247,39 @@ public class CategoryDaoImpl implements CategoryDao {
 
 
     }
+
+    // Vamos a mappear lo que nos devuelve resultset a la category
+    //
+    private Category mapResultSetToCategory(ResultSet resultSet) throws Exception {
+        // Attributes
+        Category category = new Category();
+
+
+
+        // Process
+
+        category.setId(resultSet.getLong("id"));
+        category.setName(resultSet.getString("name"));
+        category.setDescription(resultSet.getString("description"));
+        category.setUrlKey(resultSet.getString("url_key"));
+        category.setState(resultSet.getString("state"));
+
+        Timestamp createdAt = resultSet.getTimestamp("created_at");
+        if (createdAt != null) {
+            category.setCreatedAt(createdAt.toLocalDateTime());
+        }
+
+        Timestamp updatedAt = resultSet.getTimestamp("updated_at");
+        if (updatedAt != null) {
+            category.setUpdatedAt(updatedAt.toLocalDateTime());
+        }
+
+        // Result
+
+        return category;
+    }
+
+
 
 }
 

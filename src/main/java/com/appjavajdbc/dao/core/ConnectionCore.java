@@ -1,10 +1,11 @@
-package com.appjavajdbc.dao;
+package com.appjavajdbc.dao.core;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 
-
-public class ConnectionCore {
+// Se cambio a una clase abstrata no se podra instanciar
+// se debara usar extends
+public abstract class ConnectionCore {
 
     /*    Esto es de forma didáctica para aprender   fundamentos, esto se haria directamente en la
      carpeta resource  en el archivo properties  con una sentencia de forma automatica       */
@@ -25,7 +26,7 @@ public class ConnectionCore {
 
 
         // load driver
-//             Class.forName("com.mysql.cj.jdbc.Driver");  es mysql
+
         Class.forName("org.postgresql.Driver");
 
         // url connection
